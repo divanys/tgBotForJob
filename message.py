@@ -6,7 +6,7 @@ help_message = '''
 start_message = 'Привет! Сейчас ты увидишь работу платежей в Telegram!\n' + help_message
 
 terms = '''
-Правила!
+Правила! Не тормози пж
 '''
 
 item_title = 'здесь место для покупок\n' \
