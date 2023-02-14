@@ -6,7 +6,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
 from message import MESSAGES
-from token1 import  BOT_TOKEN
+from configure import BOT_TOKEN
 
 storage = MemoryStorage()
 chatbot = Bot(token=BOT_TOKEN)
