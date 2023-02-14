@@ -21,6 +21,8 @@ successful_payment = '''
 Платеж на сумму `{total_amount} {currency}` совершен успешно!
 '''
 
+something_text = '''
+Пожалуйста, напишите команду /help, чтобы получить помощь.'''
 
 MESSAGES = {
     'start': start_message,
@@ -30,6 +32,7 @@ MESSAGES = {
     'item_description': item_description,
     'AU_error': AU_error,
     'successful_payment': successful_payment,
+    'something_text': something_text,
 }
 
 

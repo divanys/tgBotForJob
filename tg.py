@@ -28,6 +28,10 @@ async def terms_cmd(message: Message):
 async def buy_process(message: Message):
     await message.answer(MESSAGES['item_title'])
 
+@dp.message_handler(lambda message: message.text)
+async def wtf_text(message: Message):
+    await message.answer(MESSAGES['something_text'])
+
 @dp.shipping_query_handler(lambda q: True)
 async def shipping_process(shipping_query: ShippingQuery):
     if shipping_query.shipping_address.country_code == 'AU':
@@ -36,20 +40,6 @@ async def shipping_process(shipping_query: ShippingQuery):
             ok=False,
             error_message=MESSAGES['AU_error']
         )
-
-    shipping_options = [SUPERSPEED_SHIPPING_OPTION]
-
-    if shipping_query.shipping_address.country_code == 'RU':
-        shipping_options.append(POST_SHIPPING_OPTION)
-
-        if shipping_query.shipping_address.city == 'Ростов-на-Дону':
-            shipping_options.append(PICKUP_SHIPPING_OPTION)
-
-    await bot.answer_shipping_query(
-        shipping_query.id,
-        ok=True,
-        shipping_options=shipping_options
-    )
 
 @dp.pre_checkout_query_handler(lambda q: True)
 async def checkout_process(pre_checkout_query: PreCheckoutQuery):
