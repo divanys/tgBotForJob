@@ -12,23 +12,6 @@ storage = MemoryStorage()
 chatbot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(chatbot, storage=storage)
 
-PRICES = [
-    LabeledPrice(label='Ноутбук', amount=1000),
-]
-
-POST_SHIPPING_OPTION = ShippingOption(
-    id='post',
-    title='Почта России'
-)
-
-POST_SHIPPING_OPTION.add(LabeledPrice('Кортонная коробка', 1000))
-
-PICKUP_SHIPPING_OPTION = ShippingOption(
-    id='pickup',
-    title='Самовывоз'
-)
-PICKUP_SHIPPING_OPTION.add(LabeledPrice('Самовывоз из Ростова-на-Дону', 1000))
-
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: Message):
     await message.answer(MESSAGES['start'])
