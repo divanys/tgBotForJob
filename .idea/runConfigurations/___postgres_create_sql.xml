@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="бд_для_бота_postgres_create.sql" type="DatabaseScript" editBeforeRun="true" singleton="false" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/бд_для_бота_postgres_create.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="f88cdbef-1d6a-4e6d-8fe0-a0b712fab9f2" />
+    <method v="2" />
+  </configuration>
+</component>
