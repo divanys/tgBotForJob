@@ -114,7 +114,7 @@ photoLst.append(nameFile)
     {[товар[i]]: {[Название]: [название[i]], [Фотография]: [фото[i]], [Цена]: [цена[i]]}}
 '''
 
-countValues, valuesInfoPrice, information = [], ['Название', 'Фотография', 'Цена'], dict()
+countValues, valuesInfoPrice, information, infoAll = [], ['Название', 'Фотография', 'Цена'], [], dict()
 
 
 
@@ -122,9 +122,10 @@ for i in range(len(nameTextFor1Price)):
     countValues.append(i + 1)
 
 for i in range(len(countValues)):
-    information[countValues[i]] = 'kkk'
-print(information)
+    information.append({'Название': f'{nameTextFor1Price[0]}', 'Фотография': f'{photoLst[0]}', 'Цена': f'{infoForPrice[0]}'})
+    infoAll[countValues[i]] = information[i]
+
+# print(infoAll)
+# print(infoAll[1]['Цена'])
 
 print('*****************************************************')
-
-# dictionary_name[key] = value
