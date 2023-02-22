@@ -61,52 +61,47 @@ dictPriceAndLinkTo = dict(zip(nameTextFor1Price, lstForPriceLink))
 '''
 
 # Сейчас делаю по 1 элементу, но надо будет обернуть в цикл для всех остальных объектов
-
 keys = list(dictPriceAndLinkTo.keys())
-firstPrice = keys[0]
-urlFirstPrice = dictPriceAndLinkTo[keys[0]]
-
-
-r = requests.get(urlFirstPrice).text
-soup = BeautifulSoup(r, 'lxml')
-
-
-'''
-    1. Блок парсинга цены
-'''
 priceLst, infoForPrice = [], []
-priceProduct = soup.find_all('span', attrs={'class': 'woocommerce-Price-amount amount'})
+photoLstLink, photoLst = [], []
+
+
+for item in range(len(nameTextFor1Price)):
+    urlFirstPrice = dictPriceAndLinkTo[keys[item]]
+
+
+    r = requests.get(urlFirstPrice).text
+    soup = BeautifulSoup(r, 'lxml')
+
+
+    priceProduct = soup.find_all('span', attrs={'class': 'woocommerce-Price-amount amount'})
 
 # у нас имеется 2 цены и каждая цена на сайте аааааааааааа расположена по одинаковым тегам и классааааааааам аааааааааа
 # а ещё не у всех товаров есть скидка
 # здесь создаётся массив из обеих цен и выборка лишь цифр, в конце в priceCurrent передаётся последняя по индексу цена
 
-priceAll = [i.text for i in priceProduct]
-for i in range(len(priceAll)):
-    price = re.findall(r'\d+', priceAll[i])
-    priceLst.append(''.join(price))
+    priceAll = [i.text for i in priceProduct]
+    for i in range(len(priceAll)):
+        price = re.findall(r'\d+', priceAll[i])
+        priceLst.append(''.join(price))
 
-priceCurrent = priceLst[-1]
-infoForPrice.append(priceCurrent)
-
-'''
-    2. Блок парсинга фотографии
-'''
-
-photoLstLink, photoLst = [], []
-photo1 = soup.find_all('img', attrs={'class': 'wp-post-image'})
-
-for link in photo1:
-    photoLstLink.append(link.get('src'))
+    priceCurrent = priceLst[-1]
+    infoForPrice.append(priceCurrent)
 
 
-img = photoLstLink[0]
-p = requests.get(img)
-nameFile = f"парсинг/img/{nameTextFor1Price[0]}.jpg"
-with open(nameFile, "wb") as file:
-    file.write(p.content)    
+    photo1 = soup.find_all('img', attrs={'class': 'wp-post-image'})
 
-photoLst.append(nameFile)
+    for link in photo1:
+        photoLstLink.append(link.get('src'))
+
+
+    img = photoLstLink[item]
+    p = requests.get(img)
+    nameFile = f"парсинг/img/{nameTextFor1Price[item]}.jpg".replace(' ', '')
+    with open(nameFile, "wb") as file:
+        file.write(p.content)    
+
+    photoLst.append(nameFile)
 
 
 '''
@@ -122,10 +117,13 @@ for i in range(len(nameTextFor1Price)):
     countValues.append(i + 1)
 
 for i in range(len(countValues)):
-    information.append({'Название': f'{nameTextFor1Price[0]}', 'Фотография': f'{photoLst[0]}', 'Цена': f'{infoForPrice[0]}'})
+    information.append({'Название': f'{nameTextFor1Price[i]}', 'Фотография': f'{photoLst[i]}', 'Цена': f'{infoForPrice[i]}'})
     infoAll[countValues[i]] = information[i]
 
-# print(infoAll)
+# print(str(infoAll).replace('{', '').replace('}', ''), sep='\n')
+
+# print(*infoAll, sep='\n')
+
 # print(infoAll[1]['Цена'])
 
 print('*****************************************************')
