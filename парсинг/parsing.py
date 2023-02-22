@@ -120,10 +120,5 @@ for i in range(len(countValues)):
     information.append({'Название': f'{nameTextFor1Price[i]}', 'Фотография': f'{photoLst[i]}', 'Цена': f'{infoForPrice[i]}'})
     infoAll[countValues[i]] = information[i]
 
-# print(str(infoAll).replace('{', '').replace('}', ''), sep='\n')
-
-# print(*infoAll, sep='\n')
-
-# print(infoAll[1]['Цена'])
 
 print('*****************************************************')
