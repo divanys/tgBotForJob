@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 from pandas import DataFrame
+import re
 
 url = 'https://aliceandcat.ru/'
 '''
@@ -25,7 +26,7 @@ for link in namePanel:
 # print(type(namePanel))
 dictNameAndLink = dict(zip(nameText, linkLink))
 # print()
-print(dictNameAndLink)  # здесь будет 6 кнопок быстрого доступа
+# print(dictNameAndLink)  # здесь будет 6 кнопок быстрого доступа
 
 '''
 Блок перехода по ссылке на конкретный товар из конкретной категории 
@@ -55,7 +56,7 @@ for name in range(len(lstForPrice)):
 
 dictPriceAndLinkTo = dict(zip(nameTextFor1Price, lstForPriceLink))
 
-print(dictPriceAndLinkTo)
+# print(dictPriceAndLinkTo)
 # print(nameTextFor1Price)
 # print(len(nameTextFor1Price))
 # print(len(lstForPriceLink))  # у нас должно получиться 6 элементов как и на сайте
@@ -64,10 +65,52 @@ print(dictPriceAndLinkTo)
 
 '''
 Блок сбора информации на товар, а именно: 
-1. Название
-2. Фотография
-3. Цена
-4. Описание
-5. аэаэаэаээа
+    1. Цена
+    2. Фотография
+    3. Название у нас имеется в предыдущем блоке в массиве nameTextFor1Price и в словаре с указанием ссылки на продукт
+    (4. Ссылка на оплату - это будет с платёжкой)
 '''
 
+# Сейчас делаю по 1 элементу, но надо будет обернуть в цикл для всех остальных объектов
+
+keys = list(dictPriceAndLinkTo.keys())
+firstPrice = keys[0]
+urlFirstPrice = dictPriceAndLinkTo[keys[0]]
+
+countValues, valuesInfoPrice, infoForPrice = [], ['Название', 'Фотография', 'Цена'], []  # здесь эти массивы объявляются для дальнейшего
+# преобразования их в словарь, как и в предыдущих блоках, но уже будет в виде:
+#   {[товар[i]]: {[Название]: [название[i]], [Фотография]: [фото[i]], [Цена]: [цена[i]]}}
+# [товар[i]] - это уникальный ID для бд сразу
+
+# print(urlFirstPrice)
+
+r = requests.get(urlFirstPrice).text
+soup = BeautifulSoup(r, 'lxml')
+
+
+'''
+    1. Блок парсинга цены
+'''
+# priceLst = []
+# priceProduct = soup.find_all('span', attrs={'class': 'woocommerce-Price-amount amount'})
+#
+# # у нас имеется 2 цены и каждая цена на сайте аааааааааааа расположена по одинаковым тегам и классааааааааам аааааааааа
+# # а ещё не у всех товаров есть скидка
+# # здесь создаётся массив из обеих цен и выборка лишь цифр, в конце в priceCurrent передаётся последняя по индексу цена
+#
+# priceAll = [i.text for i in priceProduct]
+# for i in range(len(priceAll)):
+#     price = re.findall(r'\d+', priceAll[i])
+#     priceLst.append(''.join(price))
+#
+# priceCurrent = priceLst[-1]
+#
+# infoForPrice.append(priceCurrent)
+# print(infoForPrice)
+
+'''
+    2. Блок парсинга фотографии
+'''
+
+photo1 = soup.find('img', attrs={'class': 'wp-post-image'})
+print(photo1)
