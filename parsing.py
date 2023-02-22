@@ -112,5 +112,18 @@ soup = BeautifulSoup(r, 'lxml')
     2. Блок парсинга фотографии
 '''
 
-photo1 = soup.find('img', attrs={'class': 'wp-post-image'})
-print(photo1)
+photoLstLink = []
+photo1 = soup.find_all('img', attrs={'class': 'wp-post-image'})
+
+# print(len(photo1))
+
+for link in photo1:
+    photoLstLink.append(link.get('src'))
+
+print(photoLstLink)
+
+img = photoLstLink[0]
+p = requests.get(img)
+out = open(f"img/{nameTextFor1Price[0]}.jpg", "wb")
+out.write(p.content)
+out.close()
