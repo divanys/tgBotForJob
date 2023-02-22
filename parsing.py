@@ -127,3 +127,5 @@ p = requests.get(img)
 out = open(f"img/{nameTextFor1Price[0]}.jpg", "wb")
 out.write(p.content)
 out.close()
+
+# проверка связи через вскод
