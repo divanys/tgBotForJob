@@ -88,9 +88,9 @@ for item in range(len(ps.countValues)):
         con.executemany(insertIntoProduct, dataProduct)
 
 # выводим содержимое таблицы на экран
-    with con:
-        data = con.execute("SELECT * FROM product")
-        for row in data:
-            print(row)
+#     with con:
+#         data = con.execute("SELECT * FROM product")
+#         for row in data:
+#             print(row)
 
 
