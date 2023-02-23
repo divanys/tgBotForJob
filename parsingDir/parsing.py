@@ -9,6 +9,7 @@ url = 'https://aliceandcat.ru/'
 Блок поиска и создания списка для, может быть, дополнительных категорий
 '''
 
+
 nameText, linkLink = [], []
 
 r = requests.get(url).text

@@ -10,7 +10,6 @@ con = sq.connect('bdForJogDir/dataBase.db')
 Блок создания таблиц 
 '''
 
-
 with con:
     data = con.execute("select count(*) from sqlite_master where type='table' and name='product'")
     for row in data:
