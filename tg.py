@@ -28,18 +28,6 @@ async def terms_cmd(message: Message):
 async def buy_process(message: Message):
     await message.answer(MESSAGES['item_title'])
 
-@dp.message_handler(commands=['order'])
-async def order_handler(message: Message):
-    await message.answer('text')
-
-    @dp.message_handler(content_types=['text'])
-    async def text_handler(message: types.Message):
-        # Получение информации о заказе
-        order_data = message.text.split(' ')
-        product_name = order_data[0]
-        product_price = order_data[1]
-
-
 @dp.message_handler(lambda message: message.text)
 async def wtf_text(message: Message):
     await message.answer(MESSAGES['something_text'])
