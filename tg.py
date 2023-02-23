@@ -8,6 +8,8 @@ from aiogram.utils import executor
 from message import MESSAGES
 from configure import BOT_TOKEN
 
+import bdForJogDir.sqlRequests as sql
+
 storage = MemoryStorage()
 chatbot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(chatbot, storage=storage)
@@ -15,6 +17,7 @@ dp = Dispatcher(chatbot, storage=storage)
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: Message):
     await message.answer(MESSAGES['start'])
+
 
 @dp.message_handler(commands=['help'])
 async def help_cmd(message: Message):
