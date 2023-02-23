@@ -1,7 +1,7 @@
 import sqlite3 as sq
 
-# from parsingDir import parsing as ps
-
+import parsing as ps
+import function as fn
 
 con = sq.connect('bdForJogDir/dataBase.db')
 
@@ -21,7 +21,7 @@ with con:
                         id_product INT PRIMARY KEY NOT NULL,
                         name_product TEXT NOT NULL,
                         photo BLOB NOT NULL,
-                        cost INTEGER NOT NULL
+                        cost TEXT NOT NULL
                     );
                 """)
 
@@ -49,6 +49,7 @@ with con:
                     );
                 """)
 
+
 #     data = con.execute("select count(*) from sqlite_master where type='table' and name='order'")
 #     for row in data:
 #         if row[0] == 0:
@@ -75,5 +76,21 @@ with con:
 '''
 Блок заполнения таблиц
 '''
+
+insertIntoProduct = "INSERT INTO product (id_product, name_product, photo, cost) values(?, ?, ?, ?)"
+
+
+for item in range(len(ps.countValues)):
+    dataProduct = [
+    (ps.keysALl[item], ps.infoAll[ps.keysALl[item]]['Название'], fn.photoInsert(ps.infoAll[ps.keysALl[item]]['Фотография']), ps.infoAll[ps.keysALl[item]]['Цена'])
+    ]
+    with con:
+        con.executemany(insertIntoProduct, dataProduct)
+
+# выводим содержимое таблицы на экран
+    with con:
+        data = con.execute("SELECT * FROM product")
+        for row in data:
+            print(row)
 
 

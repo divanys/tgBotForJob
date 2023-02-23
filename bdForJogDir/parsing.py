@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-# print('*****************************************************')
+print('*****************************************************')
 url = 'https://aliceandcat.ru/'
 
 '''
@@ -95,7 +95,7 @@ for item in range(len(nameTextFor1Price)):
 
     img = photoLstLink[item]
     p = requests.get(img)
-    nameFile = f"парсинг/img/{nameTextFor1Price[item]}.jpg".replace(' ', '')
+    nameFile = f"parsingDir/img/{nameTextFor1Price[item]}.jpg".replace(' ', '')
     with open(nameFile, "wb") as file:
         file.write(p.content)    
 
@@ -118,9 +118,15 @@ for i in range(len(countValues)):
     information.append({'Название': f'{nameTextFor1Price[i]}', 'Фотография': f'{photoLst[i]}', 'Цена': f'{infoForPrice[i]}'})
     infoAll[countValues[i]] = information[i]
 
-# print(infoAll)
+print(infoAll)
 
-# print('*****************************************************')
+print('*****************************************************')
+
+keysALl = list(infoAll.keys())
+
+# print(keys[0])
+
+# print(infoAll[1]['Название'])
 
 '''
 
