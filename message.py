@@ -1,23 +1,31 @@
 help_message = '''
 Отправьте команду /buy, чтобы перейти к покупке.
-Узнать правила можно воспользовавшись командой /terms.
+Связаться с тех.поддержкой можно воспользовавшись командой /teh.
 '''
 
-start_message = 'Здравствуйте! ' \
-                'Рады приветсвовать вас в боте магазина Alice&Cat.' \
-                'Здесь вы можете приобрести наши домики\n' + help_message
+start_message = 'Здравствуйте! \n' \
+                'Рады приветствовать вас в боте магазина Alice&Cat.' \
+                'Здесь вы можете приобрести наши домики'
 
-terms = '''
-Правила! Не тормози пж
-'''
 
 item_title = '''
-здесь место для покупок
-тут бы могла быть ваша реклама, но вы предпочли РКСИ
+Тут позже будет переход на сайт
+'''
+
+stocks_title = '''
+В данном разделе находятся акционные товары
 '''
 
 item_description = '''
 Купить какие то товары
+'''
+
+teh_message = '''
+Связь с тех.поддержкой
+'''
+
+inf_delivery = '''
+Доставку можно оформить во все страны и в Ркси
 '''
 
 AU_error = '''
@@ -28,19 +36,16 @@ successful_payment = '''
 Платеж на сумму `{total_amount} {currency}` совершен успешно!
 '''
 
-something_text = '''
-Пожалуйста, напишите команду /help, чтобы получить помощь.
-'''
-
 MESSAGES = {
     'start': start_message,
     'help': help_message,
-    'terms': terms,
+    'teh': teh_message,
     'item_title': item_title,
+    'stocks': stocks_title,
+    'delivery': inf_delivery,
     'item_description': item_description,
     'AU_error': AU_error,
     'successful_payment': successful_payment,
-    'something_text': something_text,
 }
 
 

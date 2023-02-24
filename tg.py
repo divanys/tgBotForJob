@@ -4,33 +4,57 @@ from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-from message import MESSAGES
+from message import MESSAGES, teh_message
 from configure import BOT_TOKEN
 
 storage = MemoryStorage()
-chatbot = Bot(token=BOT_TOKEN)
+chatbot = Bot(token='6089974069:AAGslyieQbUFasP9VyuEAmFLAXcR-vknG9g')
 dp = Dispatcher(chatbot, storage=storage)
+keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+
+catalog_button = KeyboardButton('Каталог')
+teh_button = KeyboardButton('Тех.поддержка')
+stocks_button = KeyboardButton('Акции')
+delivery_button = KeyboardButton('Информация о доставке')
+keyboard.add(catalog_button, teh_button, stocks_button, delivery_button)
 
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: Message):
-    await message.answer(MESSAGES['start'])
+    await message.answer(MESSAGES['start'], reply_markup=keyboard)
 
 @dp.message_handler(commands=['help'])
 async def help_cmd(message: Message):
     await message.answer(MESSAGES['help'])
 
-@dp.message_handler(commands=['terms'])
-async def terms_cmd(message: Message):
-    await message.answer(MESSAGES['terms'])
-
-@dp.message_handler(commands=['buy'])
+@dp.message_handler(lambda message: message.text == 'Каталог')
 async def buy_process(message: Message):
     await message.answer(MESSAGES['item_title'])
 
-@dp.message_handler(lambda message: message.text)
-async def wtf_text(message: Message):
-    await message.answer(MESSAGES['something_text'])
+@dp.message_handler(lambda message: message.text == 'Акции')
+async def buy_process(message: Message):
+    await message.answer(MESSAGES['stocks'])
+
+@dp.message_handler(lambda message: message.text == 'Тех.поддержка')
+async def start_cmd(message: Message):
+    try:
+        cid = message.chat.id
+        uid = message.from_user.id
+        await message.answer(MESSAGES['teh'])
+        msg = await message.answer("*📨 | Введите текст который хотите отправить тех.поддержке*", parse_mode='Markdown')
+        dp.register_message_handler(teh_message, lambda message: message.text, state='*')
+    except Exception as e:
+        await message.answer(f'🚫 | Ошибка при выполнении команды: {str(e)}')
+
+@dp.message_handler()
+async def teh_message(message: Message):
+    pass
+
+@dp.message_handler(lambda message: message.text == 'Информация о доставке')
+async def buy_process(message: Message):
+    await message.answer(MESSAGES['delivery'])
+
 
 @dp.shipping_query_handler(lambda q: True)
 async def shipping_process(shipping_query: ShippingQuery):
