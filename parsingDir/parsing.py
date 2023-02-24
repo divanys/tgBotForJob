@@ -9,6 +9,7 @@ url = 'https://aliceandcat.ru/'
 Блок поиска и создания списка для, может быть, дополнительных категорий
 '''
 
+
 nameText, linkLink = [], []
 
 r = requests.get(url).text
@@ -95,7 +96,7 @@ for item in range(len(nameTextFor1Price)):
 
     img = photoLstLink[item]
     p = requests.get(img)
-    nameFile = f"парсинг/img/{nameTextFor1Price[item]}.jpg".replace(' ', '')
+    nameFile = f"parsingDir/img/{nameTextFor1Price[item]}.jpg".replace(' ', '')
     with open(nameFile, "wb") as file:
         file.write(p.content)    
 
@@ -121,6 +122,12 @@ for i in range(len(countValues)):
 # print(infoAll)
 
 # print('*****************************************************')
+
+keysALl = list(infoAll.keys())
+
+# print(keys[0])
+
+# print(infoAll[1]['Название'])
 
 '''
 
