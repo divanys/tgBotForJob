@@ -1,3 +1,5 @@
+from distutils.command.config import config
+
 from aiogram.types import Message, ShippingOption, ShippingQuery, LabeledPrice, PreCheckoutQuery
 from aiogram.types.message import ContentType
 from aiogram import Bot
@@ -5,6 +7,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+
 
 from message import MESSAGES, teh_message
 from configure import BOT_TOKEN
@@ -18,12 +21,26 @@ catalog_button = KeyboardButton('Каталог')
 teh_button = KeyboardButton('Тех.поддержка')
 stocks_button = KeyboardButton('Акции')
 delivery_button = KeyboardButton('Информация о доставке')
-keyboard.add(catalog_button, teh_button, stocks_button, delivery_button)
+admin_button = KeyboardButton('Админ')
+keyboard.add(catalog_button, teh_button, stocks_button, delivery_button, admin_button )
 
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: Message):
     await message.answer(MESSAGES['start'], reply_markup=keyboard)
 
+USER_ACCESS = 0
+ADMIN_ACCESS = 1
+DEV_ACCESS = 2
+
+user_access_levels = {}
+user_access_levels[123456789] = ADMIN_ACCESS
+@dp.message_handler(commands=['admin_message'])
+async def admin_command_handler(message: Message):
+    user_id = message.from_user.id
+    if user_access_levels.get(user_id, USER_ACCESS) >= ADMIN_ACCESS:
+        await message.answer("Команда администратора выполнена.")
+    else:
+        await message.answer("У вас недостаточно прав для выполнения этой команды.")
 @dp.message_handler(commands=['help'])
 async def help_cmd(message: Message):
     await message.answer(MESSAGES['help'])
