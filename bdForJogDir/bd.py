@@ -1,6 +1,6 @@
 import sqlite3 as sq
 
-import parsing as ps
+import parsingDir.parsing as ps
 import function as fn
 
 con = sq.connect('bdForJogDir/dataBase.db')
